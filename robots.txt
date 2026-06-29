@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mitukx.github.io/sitemap.xml
+Sitemap: https://mitukx.github.io/me/sitemap.xml
