@@ -562,3 +562,500 @@ body .amini-right .thought-post h2 {
     font-size: 21px !important;
   }
 }
+
+
+/* =========================================================
+   Extra section (home page)
+   ========================================================= */
+.publications-note p {
+  margin: 0;
+}
+
+.extra-section {
+  margin-top: 6px;
+}
+
+.extra-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 14px;
+}
+
+.extra-card {
+  border: 1.5px solid rgba(11, 61, 46, 0.2);
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 250, 240, 0.94)),
+    radial-gradient(circle at 96% 10%, rgba(216, 180, 90, 0.16), transparent 28%);
+  box-shadow:
+    inset 0 0 0 1px rgba(216, 180, 90, 0.15),
+    0 10px 24px rgba(7, 35, 27, 0.06);
+  padding: 14px 16px 16px;
+}
+
+.extra-card[open] {
+  border-color: rgba(11, 61, 46, 0.34);
+}
+
+.extra-card summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #092f24;
+}
+
+.extra-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.extra-card summary::before {
+  content: "›";
+  display: inline-block;
+  color: #333333;
+  font-size: 22px;
+  line-height: 1;
+  transform: translateY(-1px);
+  transition: transform 0.15s ease;
+}
+
+.extra-card[open] summary::before {
+  transform: rotate(90deg) translateX(1px);
+}
+
+.extra-card summary::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(11, 61, 46, 0.18), rgba(216, 180, 90, 0.2));
+  margin-left: 8px;
+}
+
+.extra-lead {
+  margin: 14px 0 12px;
+  color: #58665e;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.extra-list {
+  margin: 14px 0 0 0;
+  padding-left: 18px;
+}
+
+.extra-list li {
+  margin-bottom: 8px;
+  color: #20322b;
+  line-height: 1.55;
+}
+
+.music-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.music-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.music-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(11, 61, 46, 0.9), rgba(165, 31, 45, 0.88));
+  color: #fffdf2;
+  font-weight: 700;
+  box-shadow: 0 6px 14px rgba(11, 61, 46, 0.12);
+}
+
+.music-meta {
+  min-width: 0;
+}
+
+.music-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #102b22;
+}
+
+.music-artist {
+  color: #5e6d65;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.music-placeholder {
+  margin-top: 10px;
+  color: #5e6d65;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+@media (max-width: 1000px) {
+  .extra-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .extra-card {
+    border-radius: 14px;
+    padding: 12px 14px 14px;
+  }
+
+  .extra-card summary {
+    font-size: 20px;
+  }
+
+  .music-title {
+    font-size: 17px;
+  }
+
+  .music-artist,
+  .extra-lead,
+  .music-placeholder,
+  .extra-list li {
+    font-size: 14px;
+  }
+}
+
+
+/* =========================================================
+   Extra section photo layout
+   Reference-inspired minimal two-column layout with galleries.
+   ========================================================= */
+.extra-section {
+  margin-top: 6px;
+}
+
+.extra-grid.extra-grid-photo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 1fr));
+  gap: 26px 42px;
+  margin-top: 14px;
+}
+
+.extra-grid-photo .extra-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.extra-grid-photo .extra-card summary {
+  font-size: 22px;
+  font-weight: 700;
+  color: #092f24;
+}
+
+.extra-grid-photo .extra-card summary::after {
+  display: none;
+}
+
+.extra-grid-photo .extra-lead {
+  margin: 14px 0 12px 26px;
+  color: #58665e;
+}
+
+.extra-grid-photo .extra-list {
+  margin: 14px 0 0 26px;
+  padding-left: 18px;
+}
+
+.extra-grid-photo .extra-list li {
+  margin-bottom: 9px;
+  color: #415148;
+  font-size: 16px;
+  line-height: 1.48;
+}
+
+.extra-reading-list li {
+  color: #26362f !important;
+}
+
+.extra-reading-list span {
+  color: #6d776f;
+}
+
+.photo-carousel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) 30px;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 2px 24px;
+}
+
+.gallery-figure {
+  position: relative;
+  margin: 0;
+}
+
+.gallery-image-shell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 10px;
+  background:
+    linear-gradient(135deg, rgba(11, 61, 46, 0.10), rgba(165, 31, 45, 0.08)),
+    repeating-linear-gradient(-45deg, rgba(216, 180, 90, 0.12) 0 12px, rgba(255, 255, 255, 0.26) 12px 24px);
+  border: 1px solid rgba(11, 61, 46, 0.16);
+  box-shadow: 0 14px 28px rgba(7, 35, 27, 0.09);
+}
+
+.gallery-image-shell::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 42%;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0), rgba(255,250,240,0.70));
+}
+
+.gallery-image-shell img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.gallery-image-shell img.is-loaded {
+  opacity: 1;
+}
+
+.gallery-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  color: #5a6a61;
+  font-size: 14px;
+  text-align: center;
+}
+
+.gallery-fallback[hidden] {
+  display: none;
+}
+
+.gallery-figure figcaption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.gallery-caption,
+.gallery-count {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: rgba(255, 250, 240, 0.76);
+  color: #26362f;
+  font-size: 12px;
+  line-height: 1;
+  backdrop-filter: blur(6px);
+}
+
+.gallery-button {
+  border: 0;
+  background: transparent;
+  color: #66736b;
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.gallery-button:hover {
+  color: #333333;
+  transform: translateY(-1px);
+}
+
+.gallery-button:disabled {
+  cursor: default;
+  opacity: 0.28;
+  transform: none;
+}
+
+@media (max-width: 1000px) {
+  .extra-grid.extra-grid-photo {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .photo-carousel {
+    max-width: 560px;
+  }
+}
+
+@media (max-width: 520px) {
+  .extra-grid-photo .extra-card summary {
+    font-size: 20px;
+  }
+
+  .photo-carousel {
+    grid-template-columns: 22px minmax(0, 1fr) 22px;
+    gap: 4px;
+    margin-left: 0;
+  }
+
+  .extra-grid-photo .extra-lead,
+  .extra-grid-photo .extra-list {
+    margin-left: 0;
+  }
+
+  .gallery-button {
+    font-size: 25px;
+  }
+}
+
+
+/* Static Apple Music list */
+.music-list {
+  gap: 8px;
+}
+
+.music-item {
+  position: relative;
+  align-items: center;
+  min-height: 42px;
+  padding: 4px 0;
+}
+
+.music-dot {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  font-size: 13px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.92), rgba(216, 180, 90, 0.26)),
+    linear-gradient(135deg, rgba(11, 61, 46, 0.95), rgba(165, 31, 45, 0.88));
+  color: #fffdf2;
+}
+
+.music-artwork {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(7, 35, 27, 0.12);
+}
+
+.music-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #102b22;
+}
+
+.music-artist {
+  color: #65736c;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.music-duration {
+  margin-left: auto;
+  padding-left: 10px;
+  color: #7a877f;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.music-explicit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  margin-left: 3px;
+  color: #fffdf2;
+  background: rgba(16, 43, 34, 0.68);
+  font-size: 9px;
+  font-weight: 800;
+  vertical-align: 2px;
+}
+
+@media (max-width: 520px) {
+  .music-duration {
+    display: none;
+  }
+}
+
+
+/* Empty News state */
+.news-box-empty {
+  min-height: 74px;
+}
+
+/* Make the static Apple Music list compact and reliably visible */
+.music-list {
+  margin-top: 12px;
+}
+
+.music-item {
+  min-height: 42px;
+}
+
+
+.music-link,
+.music-link:visited,
+.music-link:hover,
+.music-link:active {
+  color: inherit;
+  text-decoration: none;
+}
+
+.music-link:hover .music-title {
+  color: #333333;
+}
+
+.music-link:hover .music-artwork {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 16px rgba(7, 35, 27, 0.18);
+}
+
+.music-artwork {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+
+
+.news-empty-text {
+  margin: 0;
+  color: #444444;
+  font-size: 16px;
+  line-height: 1.45;
+}
