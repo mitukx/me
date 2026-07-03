@@ -4,18 +4,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
   const fallbackGalleries = {
-    "research-life": [
-      {
-        src: "assets/extra/research-life-1.jpg",
-        alt: "Research life photo",
-        caption: "research life"
-      },
-      {
-        src: "assets/extra/research-life-2.jpg",
-        alt: "Study or conference photo",
-        caption: "study"
-      }
-    ],
     eats: [
       {
         src: "assets/extra/eats-1.jpg",

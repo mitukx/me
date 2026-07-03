@@ -68,12 +68,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     "url": "https://music.apple.com/jp/album/%E3%83%AD%E3%83%BC%E3%83%89%E3%83%A0%E3%83%BC%E3%83%93%E3%83%BC/1218863021?i=1218863058"
   },
   {
-    "title": "Homewrecker",
+    "title": "back to friends",
     "artist": "sombr",
-    "album": "Homewrecker - Single",
-    "duration": "3:29",
-    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/84/bf/fb/84bffb0a-023f-419f-d5f7-6636f4e5d970/054391221933.jpg/300x300bb.jpg",
-    "url": "https://music.apple.com/jp/album/homewrecker/1871595252?i=1871595253"
+    "album": "back to friends - Single",
+    "duration": "3:19",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/5d/d5/ad/5dd5ad1b-fabf-9218-77f0-3adbfd5328ac/054391237118.jpg/300x300bb.jpg",
+    "url": "https://music.apple.com/jp/album/back-to-friends/1786481196?i=1786481197"
+  },
+  {
+    "title": "BIRDS OF A FEATHER",
+    "artist": "Billie Eilish",
+    "album": "HIT ME HARD AND SOFT",
+    "duration": "3:30",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/92/9f/69/929f69f1-9977-3a44-d674-11f70c852d1b/24UMGIM36186.rgb.jpg/300x300bb.jpg",
+    "url": "https://music.apple.com/jp/album/birds-of-a-feather/1739659134?i=1739659142"
   },
   {
     "title": "Beauty and a Beat",
