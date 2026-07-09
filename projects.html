@@ -114,51 +114,29 @@
       <header class="top-profile">
         <h1>Projects</h1>
         <p class="projects-intro">
-          A brief overview of my current research projects.
         </p>
       </header>
 
       <section class="project-list" aria-label="Research projects">
         <article class="project-card">
           <header>
-            <h2>Spectral Calibration of Low-Rank Fine-Tuned Transformers</h2>
+            <h2>Verifier-Compressed Reasoning Dimension</h2>
           </header>
 
           <p class="project-summary">
-            This project studies why low-rank adaptation can improve downstream accuracy while
-            still producing miscalibrated or overconfident predictions under distribution shift.
-            The central view is that LoRA rank itself is not the primary control variable; rather,
-            generalization and calibration are governed by the spectrum of the LoRA tangent kernel,
-            its alignment with the task residual, and drift in tail directions of the internal
-            representation.
+            This project develops a minimax theory of reinforcement learning with verifiable
+            rewards (RLVR). The central claim is that verifier-guided reasoning primarily
+            compresses search over reasoning traces already reachable by the base model, rather
+            than creating traces outside its support. I introduce the Verifier-Compressed
+            Reasoning Dimension (VCRD) to quantify how base-policy reachability, verifier
+            structure, and false-positive leakage determine the query complexity of finding
+            valid reasoning traces.
           </p>
 
           <ul class="project-points">
-            <li>Formulates LoRA fine-tuning as learning in a LoRA tangent-kernel regime.</li>
-            <li>Analyzes effective dimension, residual alignment, and bias--variance behavior.</li>
-            <li>Connects spectral misalignment to calibration error, OOD overconfidence, and tail drift.</li>
-            <li>Proposes spectral drift regularization as a route to more reliable LoRA adaptation.</li>
-          </ul>
-        </article>
-
-        <article class="project-card">
-          <header>
-            <h2>Effective-Support Diagnostics for Pass@1 Gains in Preference Optimization</h2>
-          </header>
-
-          <p class="project-summary">
-            This project develops a diagnostic framework for distinguishing different mechanisms
-            behind pass@1 improvements in preference-optimized language models. It asks whether
-            optimization discovers genuinely new solution strategies, reallocates probability mass
-            over already available solvers, or activates low-probability solvers that were present
-            but practically invisible under finite sampling.
-          </p>
-
-          <ul class="project-points">
-            <li>Models reasoning traces as a mixture over latent solver strategies.</li>
-            <li>Separates strict support expansion from practical finite-sample support activation.</li>
-            <li>Shows that support-preserving preference updates can improve pass@1 without expanding hard solver support.</li>
-            <li>Uses pass@k, solver entropy, and practical-vs-hard support coverage as diagnostics.</li>
+            <li>Defines VCRD as a complexity measure for verifier-guided reasoning.</li>
+            <li>Proves exponential separations between prefix-guided search and complete-trace methods.</li>
+            <li>Shows that finite-KL RLVR is support-preserving without explicit support expansion.</li>
           </ul>
         </article>
       </section>
