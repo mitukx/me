@@ -4,6 +4,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const fallbackItems = [
   {
+    "title": "otherside",
+    "artist": "Lena Raine & Minecraft",
+    "album": "Minecraft: Caves & Cliffs (Original Game Soundtrack)",
+    "duration": "3:15",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/22/02/93/22029334-8161-4c8d-18c0-2fc72029ec2a/192641853173_Cover.jpg/300x300bb.jpg",
+    "url": "https://music.apple.com/jp/album/otherside/1590458296?i=1590458562&l=en-US"
+  },
+  {
+    "title": "Viva la Vida",
+    "artist": "Coldplay",
+    "album": "Viva la Vida (Prospekt's March Edition)",
+    "duration": "4:01",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/56/bc/3d/56bc3d9c-0a4a-0466-643e-eb9bd748e8bf/190295978037.jpg/300x300bb.jpg",
+    "url": "https://music.apple.com/jp/album/viva-la-vida/1122778377?i=1122778616&l=en-US"
+  },
+  {
+    "title": "Aria Math",
+    "artist": "C418",
+    "album": "Minecraft - Volume Beta",
+    "duration": "5:10",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/dc/26/fd/dc26fd7b-3f58-e34b-375c-4f7a0b70f741/859711538643.jpg/300x300bb.jpg",
+    "url": "https://music.apple.com/jp/album/aria-math/1867890087?i=1867890258&l=en-US"
+  },
+  {
     "title": "RPG",
     "artist": "SEKAI NO OWARI",
     "album": "SEKAI NO OWARI 2010-2019",
