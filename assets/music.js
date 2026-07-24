@@ -1,8 +1,16 @@
-document.addEventListener("DOMContentLoaded", async () => {
+async function initMusic() {
   const container = document.getElementById("music-list");
   if (!container) return;
 
   const fallbackItems = [
+  {
+    "title": "Sunflower (Spider-Man: Into the Spider-Verse)",
+    "artist": "Post Malone & Swae Lee",
+    "album": "Spider-Man: Into the Spider-Verse (Soundtrack From & Inspired by the Motion Picture)",
+    "duration": "2:38",
+    "artwork": "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/4b/30/2c/4b302cb6-7a14-5464-4e97-0577e9d0be49/18UMGIM82277.rgb.jpg/300x300bb.jpg",
+    "url": "https://music.apple.com/us/album/sunflower-spider-man-into-the-spider-verse/1435229626?i=1435229627"
+  },
   {
     "title": "otherside",
     "artist": "Lena Raine & Minecraft",
@@ -227,4 +235,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   } catch (error) {
     // Keep the static fallback list.
   }
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initMusic);
+} else {
+  initMusic();
+}

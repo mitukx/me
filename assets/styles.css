@@ -1059,3 +1059,25 @@ body .amini-right .thought-post h2 {
   font-size: 16px;
   line-height: 1.45;
 }
+
+.site-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 20px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.site-footer a,
+.site-footer a:visited {
+  color: rgba(255, 255, 255, 0.72);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.site-footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}

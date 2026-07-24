@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", async () => {
+async function initGallery() {
   const carousels = Array.from(document.querySelectorAll(".photo-carousel[data-gallery]"));
   if (!carousels.length) return;
 
@@ -96,4 +96,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
     }
   });
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initGallery);
+} else {
+  initGallery();
+}
