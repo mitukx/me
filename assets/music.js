@@ -191,36 +191,290 @@ async function initMusic() {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
+  const prefersReducedMotion = window.matchMedia
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : { matches: false };
+
+  // Holds the teardown function of the currently mounted carousel.
+  let destroyCarousel = null;
+
+  const cardMarkup = (item, index, isClone = false) => {
+    const title = escapeHTML(item.title);
+    const artist = escapeHTML(item.artist || item.performer || "");
+    const album = escapeHTML(item.album || "");
+    const duration = escapeHTML(item.duration || "");
+    const explicit = item.explicit ? '<span class="music-explicit">E</span>' : "";
+    const art = item.artwork
+      ? `<img class="music-artwork" src="${escapeHTML(item.artwork)}" alt="" loading="lazy" referrerpolicy="no-referrer" />`
+      : `<div class="music-dot">${index + 1}</div>`;
+
+    const inner = `
+      <div class="music-art-frame">
+        ${art}
+        ${duration ? `<span class="music-duration">${duration}</span>` : ""}
+      </div>
+      <div class="music-meta">
+        <div class="music-title">${title}${explicit}</div>
+        <div class="music-artist">${artist}</div>
+        ${album ? `<div class="music-album">${album}</div>` : ""}
+      </div>
+    `;
+
+    const cloneAttrs = isClone ? ' aria-hidden="true" tabindex="-1"' : "";
+    const cls = `music-card${isClone ? " music-card-clone" : ""}`;
+
+    if (item.url) {
+      return `<a class="${cls} music-link" href="${escapeHTML(item.url)}" target="_blank" rel="noreferrer"${cloneAttrs}>${inner}</a>`;
+    }
+    return `<div class="${cls}"${cloneAttrs}>${inner}</div>`;
+  };
+
   const render = (items) => {
+    if (typeof destroyCarousel === "function") {
+      destroyCarousel();
+      destroyCarousel = null;
+    }
+
     if (!Array.isArray(items) || items.length === 0) {
+      container.className = "music-list";
       container.innerHTML = '<div class="music-placeholder">No tracks yet.</div>';
       return;
     }
 
-    container.innerHTML = items.map((item, index) => {
-      const title = escapeHTML(item.title);
-      const artist = escapeHTML(item.artist);
-      const album = escapeHTML(item.album || "");
-      const duration = escapeHTML(item.duration || "");
-      const explicit = item.explicit ? '<span class="music-explicit">E</span>' : '';
-      const artwork = item.artwork
-        ? `<img class="music-artwork" src="${escapeHTML(item.artwork)}" alt="${title} album artwork" loading="lazy" referrerpolicy="no-referrer" />`
-        : `<div class="music-dot">${index + 1}</div>`;
-      const inner = `
-        ${artwork}
-        <div class="music-meta">
-          <div class="music-title">${title} ${explicit}</div>
-          <div class="music-artist">${album ? `${album} — ` : ""}${artist}</div>
-        </div>
-        ${duration ? `<div class="music-duration">${duration}</div>` : ""}
-      `;
+    // The list is rendered twice so the track can loop seamlessly.
+    const cards = items.map((item, i) => cardMarkup(item, i, false)).join("");
+    const clones = items.map((item, i) => cardMarkup(item, i, true)).join("");
 
-      if (item.url) {
-        return `<a class="music-item music-link" href="${escapeHTML(item.url)}" target="_blank" rel="noreferrer">${inner}</a>`;
+    container.className = "music-carousel";
+    container.innerHTML = `
+      <div class="music-viewport">
+        <div class="music-track" role="list" tabindex="0" aria-label="Recently played tracks">${cards}${clones}</div>
+      </div>
+      <button class="music-nav music-nav-prev" type="button" aria-label="Previous tracks">&#8249;</button>
+      <button class="music-nav music-nav-next" type="button" aria-label="Next tracks">&#8250;</button>
+    `;
+
+    destroyCarousel = mountCarousel(container, items.length);
+  };
+
+  const mountCarousel = (root, originalCount) => {
+    const track = root.querySelector(".music-track");
+    const prev = root.querySelector(".music-nav-prev");
+    const next = root.querySelector(".music-nav-next");
+
+    const SPEED = 1.1;         // px per frame (~66px/s at 60fps)
+    const RESUME_DELAY = 1600; // ms of inactivity before auto-scroll resumes
+
+    let loopWidth = 0;
+    let pos = 0;
+    let rafId = null;
+    let resumeTimer = null;
+    let autoEnabled = !prefersReducedMotion.matches;
+    let paused = true;      // paused until visible / measured
+    let interacting = false; // hover, focus, drag
+    let dragging = false;
+    let dragMoved = 0;
+
+    const measure = () => {
+      const cards = track.children;
+      if (cards.length < originalCount + 1) return;
+      const w = cards[originalCount].offsetLeft - cards[0].offsetLeft;
+      if (w > 0) loopWidth = w;
+      pos = track.scrollLeft;
+      updateFades();
+    };
+
+    const updateFades = () => {
+      root.classList.toggle("is-scrollable", track.scrollWidth > track.clientWidth + 4);
+    };
+
+    const wrap = () => {
+      if (!loopWidth) return;
+      if (track.scrollLeft >= loopWidth) {
+        track.scrollLeft -= loopWidth;
+      } else if (track.scrollLeft < 0) {
+        track.scrollLeft += loopWidth;
       }
+    };
 
-      return `<div class="music-item">${inner}</div>`;
-    }).join("");
+    const step = () => {
+      rafId = requestAnimationFrame(step);
+      if (paused || interacting || !autoEnabled || !loopWidth) {
+        pos = track.scrollLeft;
+        return;
+      }
+      pos += SPEED;
+      if (pos >= loopWidth) pos -= loopWidth;
+      track.scrollLeft = pos;
+    };
+
+    const holdAuto = () => {
+      interacting = true;
+      if (resumeTimer) clearTimeout(resumeTimer);
+    };
+
+    const releaseAuto = (delay = RESUME_DELAY) => {
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(() => {
+        interacting = false;
+        pos = track.scrollLeft;
+      }, delay);
+    };
+
+    const nudge = (dir) => {
+      holdAuto();
+      const stepPx = Math.max(track.clientWidth * 0.85, 180);
+      let target = track.scrollLeft + dir * stepPx;
+      if (loopWidth) {
+        if (target < 0) {
+          track.scrollLeft += loopWidth;
+          target += loopWidth;
+        } else if (target > loopWidth) {
+          track.scrollLeft -= loopWidth;
+          target -= loopWidth;
+        }
+      }
+      track.scrollTo({ left: target, behavior: "smooth" });
+      releaseAuto();
+    };
+
+    const setAuto = (on) => {
+      autoEnabled = on;
+      pos = track.scrollLeft;
+    };
+
+    // --- listeners -------------------------------------------------------
+    const onPrev = () => nudge(-1);
+    const onNext = () => nudge(1);
+
+    const onEnter = () => holdAuto();
+    const onLeave = () => releaseAuto(400);
+    const onFocusIn = () => holdAuto();
+    const onFocusOut = () => releaseAuto(600);
+
+    const onScroll = () => {
+      if (interacting || paused || !autoEnabled) wrap();
+      updateFades();
+    };
+
+    const onWheel = (event) => {
+      // Turn vertical wheel gestures into horizontal movement inside the rail.
+      if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+      if (!loopWidth) return;
+      event.preventDefault();
+      holdAuto();
+      track.scrollLeft += event.deltaY;
+      wrap();
+      releaseAuto();
+    };
+
+    const onPointerDown = (event) => {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      dragging = true;
+      dragMoved = 0;
+      holdAuto();
+      root.classList.add("is-dragging");
+      track.setPointerCapture?.(event.pointerId);
+    };
+
+    const onPointerMove = (event) => {
+      if (!dragging) return;
+      if (event.pointerType === "touch") return; // let native touch scrolling run
+      event.preventDefault();
+      dragMoved += Math.abs(event.movementX);
+      track.scrollLeft -= event.movementX;
+      wrap();
+    };
+
+    const endDrag = (event) => {
+      if (!dragging) return;
+      dragging = false;
+      root.classList.remove("is-dragging");
+      if (event) track.releasePointerCapture?.(event.pointerId);
+      releaseAuto();
+    };
+
+    const onClickCapture = (event) => {
+      if (dragMoved > 6) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      dragMoved = 0;
+    };
+
+    const onKeyDown = (event) => {
+      if (event.key === "ArrowRight") { event.preventDefault(); nudge(1); }
+      if (event.key === "ArrowLeft") { event.preventDefault(); nudge(-1); }
+    };
+
+    prev.addEventListener("click", onPrev);
+    next.addEventListener("click", onNext);
+    root.addEventListener("mouseenter", onEnter);
+    root.addEventListener("mouseleave", onLeave);
+    root.addEventListener("focusin", onFocusIn);
+    root.addEventListener("focusout", onFocusOut);
+    track.addEventListener("scroll", onScroll, { passive: true });
+    track.addEventListener("wheel", onWheel, { passive: false });
+    track.addEventListener("pointerdown", onPointerDown);
+    track.addEventListener("pointermove", onPointerMove);
+    track.addEventListener("pointerup", endDrag);
+    track.addEventListener("pointercancel", endDrag);
+    track.addEventListener("click", onClickCapture, true);
+    track.addEventListener("keydown", onKeyDown);
+
+    // Pause when off-screen or inside a collapsed <details>.
+    let observer = null;
+    if ("IntersectionObserver" in window) {
+      observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          paused = !entry.isIntersecting;
+          if (entry.isIntersecting && !loopWidth) measure();
+        });
+      }, { threshold: 0.01 });
+      observer.observe(root);
+    } else {
+      paused = false;
+    }
+
+    let resizeObserver = null;
+    if ("ResizeObserver" in window) {
+      resizeObserver = new ResizeObserver(() => measure());
+      resizeObserver.observe(track);
+    }
+    window.addEventListener("resize", measure);
+
+    // Re-measure once the <details> wrapper opens and once artwork loads.
+    const details = root.closest("details");
+    const onDetailsToggle = () => {
+      if (!details.open) { paused = true; return; }
+      paused = false;
+      requestAnimationFrame(measure);
+    };
+    if (details) {
+      details.addEventListener("toggle", onDetailsToggle);
+      if (details.open) paused = false;
+    }
+
+    track.querySelectorAll("img").forEach((img) => {
+      if (!img.complete) img.addEventListener("load", measure, { once: true });
+    });
+
+    const onMotionChange = () => setAuto(!prefersReducedMotion.matches);
+    prefersReducedMotion.addEventListener?.("change", onMotionChange);
+
+    measure();
+    setAuto(autoEnabled);
+    rafId = requestAnimationFrame(step);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      if (resumeTimer) clearTimeout(resumeTimer);
+      observer?.disconnect();
+      resizeObserver?.disconnect();
+      window.removeEventListener("resize", measure);
+      details?.removeEventListener("toggle", onDetailsToggle);
+      prefersReducedMotion.removeEventListener?.("change", onMotionChange);
+    };
   };
 
   // Render immediately, then optionally replace with JSON data if available.
