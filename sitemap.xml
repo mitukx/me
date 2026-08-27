@@ -9,10 +9,6 @@
       <image:title>Kazuki Uesugi</image:title>
       <image:caption>Portrait of Kazuki Uesugi</image:caption>
     </image:image>
-    <image:image>
-      <image:loc>https://mitukx.github.io/me/assets/og-image.png</image:loc>
-      <image:title>Kazuki Uesugi personal website</image:title>
-    </image:image>
   </url>
   <url>
     <loc>https://mitukx.github.io/me/projects.html</loc>
