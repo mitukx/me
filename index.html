@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="google-site-verification" content="gXvbPIsmVNWGY3dn-rYBaOBfh4xmMwCSXX2lSpQESMM" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
 
   <title>Kazuki Uesugi | 上杉和輝</title>
   <meta name="description" content="Kazuki Uesugi / 上杉和輝. Undergraduate student at ZEN University interested in statistical learning theory, deep learning theory, high-dimensional statistics, Lean 4 formalization, LLM reasoning, and AI research." />
@@ -15,11 +16,17 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://mitukx.github.io/me/" />
   <meta property="og:image" content="https://mitukx.github.io/me/assets/og-image.png" />
+  <meta property="og:image:secure_url" content="https://mitukx.github.io/me/assets/og-image.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1729" />
+  <meta property="og:image:height" content="910" />
+  <meta property="og:image:alt" content="Kazuki Uesugi personal website" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Kazuki Uesugi | 上杉和輝" />
   <meta name="twitter:description" content="Personal academic website about statistical learning theory, deep learning theory, Lean 4 formalization, and AI research." />
   <meta name="twitter:image" content="https://mitukx.github.io/me/assets/og-image.png" />
+  <meta name="twitter:image:alt" content="Kazuki Uesugi personal website" />
 
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" href="favicon.png" type="image/png" />
@@ -28,10 +35,42 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Kazuki Uesugi",
-    "alternateName": "上杉和輝",
-    "url": "https://mitukx.github.io/me/"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://mitukx.github.io/me/#website",
+        "name": "Kazuki Uesugi",
+        "alternateName": "上杉和輝",
+        "url": "https://mitukx.github.io/me/",
+        "image": {
+          "@type": "ImageObject",
+          "url": "https://mitukx.github.io/me/assets/profile.jpg",
+          "width": 1161,
+          "height": 1355,
+          "caption": "Kazuki Uesugi"
+        },
+        "publisher": {
+          "@id": "https://mitukx.github.io/me/#person"
+        }
+      },
+      {
+        "@type": "Person",
+        "@id": "https://mitukx.github.io/me/#person",
+        "name": "Kazuki Uesugi",
+        "alternateName": "上杉和輝",
+        "url": "https://mitukx.github.io/me/",
+        "image": "https://mitukx.github.io/me/assets/profile.jpg",
+        "jobTitle": "Undergraduate Student",
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "ZEN University"
+        },
+        "sameAs": [
+          "https://github.com/mitukx",
+          "https://www.linkedin.com/in/kazuki-uesugi/"
+        ]
+      }
+    ]
   }
   </script>
 
